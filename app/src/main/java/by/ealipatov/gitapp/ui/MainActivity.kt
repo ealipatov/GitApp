@@ -1,42 +1,58 @@
-package by.ealipatov.gitapp
+package by.ealipatov.gitapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.ealipatov.gitapp.app
+import by.ealipatov.gitapp.domain.UserEntityDTO
 import by.ealipatov.gitapp.databinding.ActivityMainBinding
-import by.ealipatov.gitapp.reciclerview.UsersAdapter
-import by.ealipatov.gitapp.repository.LocalUsersRepositoryImpl
-import by.ealipatov.gitapp.repository.UsersRepository
+import by.ealipatov.gitapp.ui.users.UsersAdapter
+import by.ealipatov.gitapp.domain.UsersRepository
 import by.ealipatov.gitapp.utils.toast
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
-    private val usersRepository: UsersRepository = LocalUsersRepositoryImpl()
+    private val usersRepository: UsersRepository by lazy {app.usersRepository}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initView()
+    }
+
+    private fun initView(){
         showProgressBar(false)
         initRecyclerView()
 
         binding.refreshButton.setOnClickListener{
-            toast("Button pressed")
-            showProgressBar(true)
-            usersRepository.getUsers(
-                onSuccess = {
-                    showProgressBar(false)
-                    adapter.setData(it)
-                },
-                onError = {
-                    showProgressBar(false)
-                    toast(getString(R.string.error_data_loading))
-                }
-            )
+            loadData()
         }
+    }
+
+    private fun loadData(){
+        showProgressBar(true)
+        usersRepository.getUsers(
+            onSuccess = {
+                showProgressBar(false)
+                onDataLoaded(it)
+            },
+            onError = {
+                showProgressBar(false)
+                onError(it)
+            }
+        )
+    }
+
+    private fun onDataLoaded(data: List<UserEntityDTO>){
+        adapter.setData(data)
+    }
+
+    private fun onError(throwable: Throwable){
+        toast(throwable.message)
     }
 
     private fun initRecyclerView() {

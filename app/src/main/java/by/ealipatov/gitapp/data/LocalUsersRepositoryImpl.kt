@@ -1,8 +1,9 @@
-package by.ealipatov.gitapp.repository
+package by.ealipatov.gitapp.data
 
 import android.os.Handler
 import android.os.Looper
-import by.ealipatov.gitapp.UserEntityDTO
+import by.ealipatov.gitapp.domain.UserEntityDTO
+import by.ealipatov.gitapp.domain.UsersRepository
 import by.ealipatov.gitapp.utils.DATA_LOADING_LOCAL_DELAY
 
 class LocalUsersRepositoryImpl: UsersRepository {

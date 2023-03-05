@@ -1,6 +1,4 @@
-package by.ealipatov.gitapp.repository
-
-import by.ealipatov.gitapp.UserEntityDTO
+package by.ealipatov.gitapp.domain
 
 interface UsersRepository {
     //CRUD (Create, Read, Update, Delete)

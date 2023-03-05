@@ -1,10 +1,10 @@
-package by.ealipatov.gitapp.reciclerview
+package by.ealipatov.gitapp.ui.users
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.ealipatov.gitapp.R
-import by.ealipatov.gitapp.UserEntityDTO
+import by.ealipatov.gitapp.domain.UserEntityDTO
 import by.ealipatov.gitapp.databinding.ItemUserBinding
 import coil.load
 

@@ -1,4 +1,4 @@
-package by.ealipatov.gitapp
+package by.ealipatov.gitapp.domain
 
 data class UserEntityDTO (
     val login: String,
