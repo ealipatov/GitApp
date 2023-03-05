@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.ealipatov.gitapp.domain.UserEntityDTO
 
-class UsersAdapter: RecyclerView.Adapter<UserViewHolder>() {
+class UsersAdapter : RecyclerView.Adapter<UserViewHolder>() {
     private val data = mutableListOf<UserEntityDTO>()
 
     init {
@@ -22,10 +22,10 @@ class UsersAdapter: RecyclerView.Adapter<UserViewHolder>() {
 
     override fun getItemCount() = data.size
 
-    private fun getItem (position: Int) = data[position]
+    private fun getItem(position: Int) = data[position]
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(users: List<UserEntityDTO>){
+    fun setData(users: List<UserEntityDTO>) {
         data.clear()
         data.addAll(users)
         notifyDataSetChanged()

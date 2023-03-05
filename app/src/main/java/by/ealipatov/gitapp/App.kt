@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import by.ealipatov.gitapp.data.LocalUsersRepositoryImpl
 import by.ealipatov.gitapp.domain.UsersRepository
 
-class App: Application() {
+class App : Application() {
     val usersRepository: UsersRepository by lazy { LocalUsersRepositoryImpl() }
 }
 

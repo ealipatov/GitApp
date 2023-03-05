@@ -14,7 +14,7 @@ import by.ealipatov.gitapp.utils.toast
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UsersAdapter()
-    private val usersRepository: UsersRepository by lazy {app.usersRepository}
+    private val usersRepository: UsersRepository by lazy { app.usersRepository }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,16 +24,16 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
-    private fun initView(){
+    private fun initView() {
         showProgressBar(false)
         initRecyclerView()
 
-        binding.refreshButton.setOnClickListener{
+        binding.refreshButton.setOnClickListener {
             loadData()
         }
     }
 
-    private fun loadData(){
+    private fun loadData() {
         showProgressBar(true)
         usersRepository.getUsers(
             onSuccess = {
@@ -47,11 +47,11 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun onDataLoaded(data: List<UserEntityDTO>){
+    private fun onDataLoaded(data: List<UserEntityDTO>) {
         adapter.setData(data)
     }
 
-    private fun onError(throwable: Throwable){
+    private fun onError(throwable: Throwable) {
         toast(throwable.message)
     }
 
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         binding.usersRecyclerView.adapter = adapter
     }
 
-    private fun showProgressBar(isProgress: Boolean){
+    private fun showProgressBar(isProgress: Boolean) {
         binding.progressBar.isVisible = isProgress
         binding.usersRecyclerView.isVisible = !isProgress
     }

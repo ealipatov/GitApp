@@ -8,12 +8,12 @@ import by.ealipatov.gitapp.domain.UserEntityDTO
 import by.ealipatov.gitapp.databinding.ItemUserBinding
 import coil.load
 
-class UserViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
+class UserViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
 ) {
     private val binding = ItemUserBinding.bind(itemView)
 
-    fun bind(userEntity: UserEntityDTO){
+    fun bind(userEntity: UserEntityDTO) {
         binding.userIdTextView.text = userEntity.id.toString()
         binding.userLoginTextView.text = userEntity.login
         displayUserAvatar(userEntity.avatarUrl)
