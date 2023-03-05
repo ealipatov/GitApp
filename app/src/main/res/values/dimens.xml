@@ -3,4 +3,8 @@
     <dimen name="recycler_view_padding">16dp</dimen>
     <dimen name="avatar_width">72dp</dimen>
     <dimen name="avatar_height">72dp</dimen>
+    <dimen name="item_user_text_view_padding">8dp</dimen>
+    <dimen name="item_user_login_text_size">24sp</dimen>
+    <dimen name="item_user_padding_top">4dp</dimen>
+    <dimen name="item_user_padding_bottom">4dp</dimen>
 </resources>

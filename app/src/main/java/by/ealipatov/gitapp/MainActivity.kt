@@ -2,6 +2,7 @@ package by.ealipatov.gitapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.ealipatov.gitapp.databinding.ActivityMainBinding
 import by.ealipatov.gitapp.reciclerview.UsersAdapter
@@ -19,13 +20,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        showProgressBar(false)
         initRecyclerView()
 
         binding.refreshButton.setOnClickListener{
             toast("Button pressed")
+            showProgressBar(true)
             usersRepository.getUsers(
-                onSuccess = adapter::setData,
-                onError = {toast(getString(R.string.error_data_loading))}
+                onSuccess = {
+                    showProgressBar(false)
+                    adapter.setData(it)
+                },
+                onError = {
+                    showProgressBar(false)
+                    toast(getString(R.string.error_data_loading))
+                }
             )
         }
     }
@@ -33,5 +42,10 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         binding.usersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.usersRecyclerView.adapter = adapter
+    }
+
+    private fun showProgressBar(isProgress: Boolean){
+        binding.progressBar.isVisible = isProgress
+        binding.usersRecyclerView.isVisible = !isProgress
     }
 }
