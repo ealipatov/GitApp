@@ -4,7 +4,6 @@ import android.app.Activity
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
-
 /***
  * Функция выывода на экран сообщений - "тостов" для фрагментов
  * На вход принимает строку
