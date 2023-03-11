@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         setContentView(binding.root)
 
         initView()
-        presenter = UsersPresenter(app.usersRepository)
+
+        presenter = extractPresenter()
         presenter.attach(this)
     }
 
@@ -33,6 +34,13 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         super.onDestroy()
     }
 
+    override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter {
+        return presenter
+    }
+    private fun  extractPresenter() : UsersContract.Presenter{
+        return  lastCustomNonConfigurationInstance as? UsersContract.Presenter
+            ?: UsersPresenter(app.usersRepository)
+    }
     private fun initView() {
         showProgress(false)
         initRecyclerView()
