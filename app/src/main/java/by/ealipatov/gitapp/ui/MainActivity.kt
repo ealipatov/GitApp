@@ -13,14 +13,17 @@ import by.ealipatov.gitapp.ui.users.UsersPresenter
 import by.ealipatov.gitapp.utils.toast
 
 class MainActivity : AppCompatActivity(), UsersContract.View {
-    private lateinit var binding: ActivityMainBinding
+
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
+
     private val adapter = UsersAdapter()
 
     private lateinit var presenter: UsersContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initView()
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
 
     override fun onDestroy() {
         presenter.detach()
+        _binding = null
         super.onDestroy()
     }
 

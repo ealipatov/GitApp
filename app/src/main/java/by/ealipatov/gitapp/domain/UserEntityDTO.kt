@@ -17,5 +17,9 @@ data class UserEntityDTO(
 
     @SerializedName("avatar_url")
     @Expose
-    val avatarUrl: String
+    val avatarUrl: String,
+
+    @SerializedName("type")
+    @Expose
+    val type: String
 ) : Parcelable
