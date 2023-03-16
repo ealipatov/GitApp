@@ -1,51 +1,60 @@
 package by.ealipatov.gitapp.ui.profile
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
+import by.ealipatov.gitapp.App
 import by.ealipatov.gitapp.R
 import by.ealipatov.gitapp.app
-import by.ealipatov.gitapp.databinding.ActivityProfileBinding
+import by.ealipatov.gitapp.databinding.FragmentUserProfileBinding
 import by.ealipatov.gitapp.domain.UserEntityDTO
+import by.ealipatov.gitapp.ui.navigation.OnBackPressedListener
+import by.ealipatov.gitapp.ui.navigation.UsersScreens
 import by.ealipatov.gitapp.utils.toast
 import coil.load
+import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 
-class UserProfileActivity: AppCompatActivity(), ProfileContract.View {
-
-    private var _binding: ActivityProfileBinding? = null
+class UserProfileFragment(position: Int) : MvpAppCompatFragment(), UserProfileView,
+    OnBackPressedListener {
+    private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var presenter: ProfileContract.Presenter
+    private val presenter: UserProfilePresenter by moxyPresenter {
+        UserProfilePresenter(app.usersRepository)
+    }
+    val pos = position
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        _binding = ActivityProfileBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return FragmentUserProfileBinding.inflate(inflater, container, false).also {
+            _binding = it
+        }.root
+    }
 
-        val position = intent.getIntExtra("position",0)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        presenter = extractPresenter()
-        presenter.attach(this)
-
-        presenter.loadUserProfile(position)
+        presenter.loadUserProfile(pos)
     }
 
     override fun onDestroy() {
-        presenter.detach()
-        _binding = null
         super.onDestroy()
+        _binding = null
     }
 
-    override fun onRetainCustomNonConfigurationInstance(): ProfileContract.Presenter {
-        return presenter
-    }
-    private fun  extractPresenter() : ProfileContract.Presenter{
-        return  lastCustomNonConfigurationInstance as? ProfileContract.Presenter
-            ?: UserProfilePresenter(app.usersRepository)
+    override fun onBackPressed(): Boolean {
+        App.instance.router.backTo(UsersScreens)
+        return true
     }
 
     override fun showUserProfile(user: UserEntityDTO) {
-        with(binding){
+        with(binding) {
             showProgress(false)
             displayUserAvatar(user.avatarUrl)
             userLoginTextView.text = user.login

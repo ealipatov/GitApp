@@ -13,15 +13,12 @@ class UsersAdapter : RecyclerView.Adapter<UserViewHolder>() {
     }
 
     override fun getItemId(position: Int) = getItem(position).id.toLong()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserViewHolder(parent)
-
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(getItem(position), position)
     }
 
     override fun getItemCount() = data.size
-
     private fun getItem(position: Int) = data[position]
 
     @SuppressLint("NotifyDataSetChanged")
